@@ -10,3 +10,6 @@ The use of technology has increased rapidly over the last decade all over the wo
 
 Face recognition is a technology that can identify or verify a subject based on an image, video, or other audio-visual element of his face. This identification is typically used to gain access to an application, system, or service. It is a biometric identification method that uses body measurements, in this case the face and head, to verify a person's identity through its facial biometric pattern and data. To identify, verify, and/or authenticate a person, the technology collects a set of unique biometric data associated with their face and facial expression.
 
+## Voice Recognition
+
+In contrast to passwords or tokens, which require physical input, biometric voice recognition uses the human voice to uniquely identify biological characteristics in order to authenticate an individual. Voice biometric recognition works by recording the voice of the person whose identity must be stored in the system. This input is saved as a print for authentication purposes. The input print is created using software that allows the voice statement to be split into multiple frequencies.
