@@ -6,10 +6,14 @@ The article below explores on building a multilevel authentication service using
 
 The use of technology has increased rapidly over the last decade all over the world. A greater proportion of the population now owns laptops, personal computers, and smart phones, making it easier to access the internet and, as a result, changing the lives of millions of people. All web-based systems that have users and store personal information about those users need a mechanism to keep track of that information. Typically, each system user is assigned a database instance that represents them (their identity). An authentication and authorization mechanism are used to control access to certain information in order to protect the user's identity. Password authentication is the most common method in web-based systems. To access a remote account, users frequently enter a combination of their username and password into a form. Passwords have well-known drawbacks in terms of usability and security. As a result, biometric-based authentication is being promoted. The primary motivation for biometric authentication is usability: users do not need to remember passwords, there is nothing for them to carry, biometric systems are generally simple to use, and scalable in terms of the burden placed on users. Biometric technology can be used to reduce the risk of password sharing, forgetting, losing, and embezzlement.
 
-## Face Recognition
+### Face Recognition
 
 Face recognition is a technology that can identify or verify a subject based on an image, video, or other audio-visual element of his face. This identification is typically used to gain access to an application, system, or service. It is a biometric identification method that uses body measurements, in this case the face and head, to verify a person's identity through its facial biometric pattern and data. To identify, verify, and/or authenticate a person, the technology collects a set of unique biometric data associated with their face and facial expression.
 
-## Voice Recognition
+### Voice Recognition
 
 In contrast to passwords or tokens, which require physical input, biometric voice recognition uses the human voice to uniquely identify biological characteristics in order to authenticate an individual. Voice biometric recognition works by recording the voice of the person whose identity must be stored in the system. This input is saved as a print for authentication purposes. The input print is created using software that allows the voice statement to be split into multiple frequencies.
+
+## Proposed Work
+
+We propose a multilevel biometric authentication system wherein facial and voice recognition would be carried out simultaneously. The user would have to get his face authorized while replicating his/her stored audio at the same time. This is done to prevent any form of unauthorized access by images or audio mimicking. At the same time the captured biometric data if the user will be further hashed and stored into the database, thus increasing its security. Thus, we can divide the authentication process into two parts which are carried out simultaneously:
