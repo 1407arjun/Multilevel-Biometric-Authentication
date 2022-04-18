@@ -17,3 +17,7 @@ In contrast to passwords or tokens, which require physical input, biometric voic
 ## Proposed Work
 
 We propose a multilevel biometric authentication system wherein facial and voice recognition would be carried out simultaneously. The user would have to get his face authorized while replicating his/her stored audio at the same time. This is done to prevent any form of unauthorized access by images or audio mimicking. At the same time the captured biometric data if the user will be further hashed and stored into the database, thus increasing its security. Thus, we can divide the authentication process into two parts which are carried out simultaneously:
+
+### Face Recognition
+
+The user would be asked to enrol his/her face when registering for the first time. Multiple frames of the user’s face would be captured by the webcam module, with and without the user’s mouth being open. These would then be processed, its features would be extracted and analysed by an OpenCV model post which they would be stored in the system database. Next, when the user is being authenticated, the image of the face of the user would be processed and analysed once again and compared with the features stored in the database. Based on the match, the user would be either accepted or rejected by the system.
