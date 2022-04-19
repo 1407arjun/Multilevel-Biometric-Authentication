@@ -21,3 +21,9 @@ We propose a multilevel biometric authentication system wherein facial and voice
 ### Face Recognition
 
 The user would be asked to enrol his/her face when registering for the first time. Multiple frames of the user’s face would be captured by the webcam module, with and without the user’s mouth being open. These would then be processed, its features would be extracted and analysed by an OpenCV model post which they would be stored in the system database. Next, when the user is being authenticated, the image of the face of the user would be processed and analysed once again and compared with the features stored in the database. Based on the match, the user would be either accepted or rejected by the system.
+
+### Voice Recognition
+
+Here, the user would be asked to record a sound which would be used to authenticate the user each time. On registration, the user would be asked to provide his/her audio which would then be used to train the speech model frame by frame, by extracting the features from the recorded audio and stored in the database. When a user tries to authenticate, again all the frames from the input audio are analysed and features are extracted and identified from the database. A machine learning algorithm – Support Vector Machines (SVM) is applied on the features which is used to test and authenticate the user.
+
+During the authentication process, the user has to give his/her voice audio while keeping his/her webcam on. Face and voice recognition will be carried out together since, the user’s face with and without the mouth being open was recorded during registration, which will help increase the accuracy of face recognition and lessen errors. Thus, this approach provides a dual layer of security on top of the already existing biometric authentication methods. Finally, the biometric features are hashed using encryption algorithms before storing in the database to prevent data from being misused if leaked
