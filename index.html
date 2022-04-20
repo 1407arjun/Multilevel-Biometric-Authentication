@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" 
+        content="IE=edge">
+    <meta name="viewport" content=
+        "width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Video & Audio Recorder</title>
+</head>
+  
+<body>
+    <h1> Video & Audio Recorder </h1>
+  
+    <div id="vid-recorder">
+        <h3>Record Video </h3>
+        <video autoplay id="web-cam-container" 
+            style="background-color: black;">
+            Your browser doesn't support 
+            the video tag
+        </video>
+  
+        <div class="recording" id="vid-record-status">
+            Click the "Start video Recording" 
+            button to start recording
+        </div>
+  
+        <!-- This button will start the video recording -->
+        <button type="button" id="start-vid-recording" 
+            onclick="startRecording(this, 
+            document.getElementById('stop-vid-recording'))">
+            Start recording
+        </button>
+  
+        <!-- This button will stop the video recording -->
+        <button type="button" id="stop-vid-recording" 
+            disabled onclick="stopRecording(this, 
+            document.getElementById('start-vid-recording'))">
+            Cancel
+        </button>
+
+        <div class="recording" id="timer">
+            20 sec(s) remaining
+        </div>
+
+        <canvas style="display: none;"></canvas>
+        <img id="screenshot" src="">
+  
+        <!--The video element will be created using 
+            JavaScript and contains recorded video-->
+        <!-- <video id="recorded-video"  controls>
+            Your browser doesn't support the video tag
+        </video> -->
+  
+        <!-- The below link will let the
+             users download the recorded video -->
+        <!-- <a href="" > Download it! </a> -->
+    </div>
+    <script src="index.js"></script>
+</body>
+  
+</html>
