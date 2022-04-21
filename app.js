@@ -14,11 +14,16 @@ const client = new MongoClient(process.env.MONGODB_URI, {
     useNewUrlParser: true
 })
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html")
+app.get("/login", (req, res) => {
+    res.sendFile(__dirname + "/login.html")
+})
+
+app.get("/signup", (req, res) => {
+    res.sendFile(__dirname + "/signup.html")
 })
 
 app.get("/user", async (req, res) => {
+    console.log(req.query)
     await client.connect()
     const user = await client
         .db("MBA")

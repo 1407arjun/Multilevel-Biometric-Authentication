@@ -1,10 +1,18 @@
 const webCamContainer = document.getElementById("web-cam-container")
 const canvas = document.querySelector("canvas")
 
+var thingsToRead = [
+    "Never gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you",
+    "There's a voice that keeps on calling me\n	Down the road, that's where I'll always be.\n	Every stop I make, I make a new friend,\n	Can't stay for long, just turn around and I'm gone again\n	\n	Maybe tomorrow, I'll want to settle down,\n	Until tomorrow, I'll just keep moving on.\n	\n	Down this road that never seems to end,\n	Where new adventure lies just around the bend.\n	So if you want to join me for a while,\n	Just grab your hat, come travel light, that's hobo style.",
+    "They're the world's most fearsome fighting team \n	They're heroes in a half-shell and they're green\n	When the evil Shredder attacks\n	These Turtle boys don't cut him no slack! \n	Teenage Mutant Ninja Turtles\nTeenage Mutant Ninja Turtles",
+    "If you're seein' things runnin' thru your head \n	Who can you call (ghostbusters)\n	An' invisible man sleepin' in your bed \n	Oh who ya gonna call (ghostbusters) \nI ain't afraid a no ghost \n	I ain't afraid a no ghost \n	Who ya gonna call (ghostbusters) \n	If you're all alone pick up the phone \n	An call (ghostbusters)"
+]
+
 let chunks = []
 let paused = true
 let timer
 let dataURL
+let faceId1
 
 const videoMediaConstraints = {
     audio: true,
@@ -35,15 +43,9 @@ function startRecording(thisButton, otherButton) {
             window.mediaStream = mediaStream
             window.mediaRecorder = mediaRecorder
 
-            console.log(
-                "I'm listening... just start talking for a few seconds..."
-            )
-            console.log(
+            document.getElementById("things-to-read").innerText =
                 "Maybe read this: \n" +
-                    thingsToRead[
-                        Math.floor(Math.random() * thingsToRead.length)
-                    ]
-            )
+                thingsToRead[Math.floor(Math.random() * thingsToRead.length)]
 
             mediaRecorder.start()
             mediaRecorder.ondataavailable = (e) => {
@@ -65,7 +67,6 @@ function startRecording(thisButton, otherButton) {
                 }
             }
             webCamContainer.srcObject = mediaStream
-            document.getElementById(`vid-record-status`).innerText = "Recording"
             thisButton.disabled = true
             otherButton.disabled = false
 
@@ -94,7 +95,6 @@ function startRecording(thisButton, otherButton) {
                     dataURL = canvas.toDataURL()
                     console.log(dataURL)
                     document.getElementById("screenshot").src = dataURL
-                    startFaceDetection(dataURL)
                 }
                 if (time <= 0) {
                     paused = false
@@ -113,7 +113,6 @@ function stopRecording(thisButton, otherButton) {
         track.stop()
     })
 
-    document.getElementById(`vid-record-status`).innerText = "Recording done!"
     document.getElementById("timer").innerText = `25 sec(s) remaining`
     thisButton.disabled = true
     otherButton.disabled = false
@@ -129,16 +128,6 @@ function verify() {
             const mediaRecorder = new MediaRecorder(mediaStream)
             window.mediaStream = mediaStream
             window.mediaRecorder = mediaRecorder
-
-            console.log(
-                "I'm listening... just start talking for a few seconds..."
-            )
-            console.log(
-                "Maybe read this: \n" +
-                    thingsToRead[
-                        Math.floor(Math.random() * thingsToRead.length)
-                    ]
-            )
 
             mediaRecorder.start()
             mediaRecorder.ondataavailable = (e) => {
@@ -161,8 +150,6 @@ function verify() {
             }
 
             webCamContainer.srcObject = mediaStream
-
-            document.getElementById(`vid-record-status`).innerText = "Verifying"
             document.getElementById("timer").innerText = `6 sec(s) remaining`
 
             let time = 6
@@ -189,7 +176,7 @@ function verify() {
                     dataURL = canvas.toDataURL()
                     console.log(dataURL)
                     document.getElementById("screenshot").src = dataURL
-                    startFaceDetection(dataURL)
+                    startFaceDetection(dataURL, 2)
                 }
 
                 if (time <= 0) {
@@ -198,10 +185,32 @@ function verify() {
                     window.mediaStream.getTracks().forEach((track) => {
                         track.stop()
                     })
-                    document.getElementById(`vid-record-status`).innerText =
-                        "Verification done!"
                     clearInterval(timer)
                 }
             }, 1000)
         })
+}
+
+function createUser() {
+    var request = new XMLHttpRequest()
+    request.open("POST", "/user", true)
+    request.setRequestHeader("Content-Type", "application/json")
+
+    request.onload = function () {
+        const json = JSON.parse(request.responseText)
+        if (json.acknowledged) alert("User registered successfully")
+        else alert("Failed to register user")
+    }
+
+    request.send(
+        JSON.stringify({
+            name:
+                document.getElementById("firstName").value +
+                " " +
+                document.getElementById("lastName").value,
+            username: document.getElementById("username").value,
+            profileId,
+            face: dataURL
+        })
+    )
 }
