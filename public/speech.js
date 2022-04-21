@@ -4,25 +4,9 @@ const enrolTextIndependentVerificationProfileEndpoint = (profileId) =>
 const verifyTextIndependentProfileEndpoint = (profileId) =>
     `https://eastus2.api.cognitive.microsoft.com//speaker/verification/v2.0/text-independent/profiles/${profileId}/verify`
 const speechKey = "d64e48a129aa4c2f94817c74ab76bd40"
+let profileId
 
 function createTextIndependentVerificationProfile(blob) {
-    if (verificationProfile && verificationProfile.profileId) {
-        if (verificationProfile.remainingEnrollmentsSpeechLength == 0) {
-            console.log("Verification enrollment already completed")
-            return
-        } else {
-            console.log(
-                "Verification enrollment time remaining: " +
-                    verificationProfile.remainingEnrollmentsSpeechLength
-            )
-            enrolTextIndependentProfileAudioForVerification(
-                blob,
-                verificationProfile.profileId
-            )
-            return
-        }
-    }
-
     var request = new XMLHttpRequest()
     request.open("POST", createTextIndependentVerificationProfileEndpoint, true)
     request.setRequestHeader("Content-Type", "application/json")
@@ -31,8 +15,7 @@ function createTextIndependentVerificationProfile(blob) {
     request.onload = function () {
         console.log(request.responseText)
         var json = JSON.parse(request.responseText)
-        var profileId = json.profileId
-        verificationProfile.profileId = profileId
+        profileId = json.profileId
         enrolTextIndependentProfileAudioForVerification(blob, profileId)
     }
 
@@ -57,12 +40,9 @@ function enrolTextIndependentProfileAudioForVerification(blob, profileId) {
         console.log(request.responseText)
 
         var json = JSON.parse(request.responseText)
+        console.log(json)
 
-        verificationProfile.remainingEnrollmentsSpeechLength =
-            json.remainingEnrollmentsSpeechLength
-        if (verificationProfile.remainingEnrollmentsSpeechLength == 0) {
-            console.log("Verification should be enabled!")
-        }
+        console.log("Verification should be enabled!")
     }
 
     request.send(blob)
@@ -70,11 +50,7 @@ function enrolTextIndependentProfileAudioForVerification(blob, profileId) {
 
 function verifyTextIndependentProfile(blob) {
     var request = new XMLHttpRequest()
-    request.open(
-        "POST",
-        verifyTextIndependentProfileEndpoint(verificationProfile.profileId),
-        true
-    )
+    request.open("POST", verifyTextIndependentProfileEndpoint(profileId), true)
 
     request.setRequestHeader("Content-Type", "application/json")
     request.setRequestHeader("Ocp-Apim-Subscription-Key", speechKey)
