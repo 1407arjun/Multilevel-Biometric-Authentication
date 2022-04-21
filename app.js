@@ -3,16 +3,16 @@ const bodyParser = require("body-parser")
 
 const app = express()
 app.use(express.static(__dirname + "/public"))
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-
-app.use("/face", require("./routes/face/enroll"))
-app.use("/face", require("./routes/face/profile"))
-app.use("/speech", require("./routes/speech/enroll"))
-app.use("/speech", require("./routes/speech/profile"))
+app.use(bodyParser.urlencoded({ extended: true, limit: "1gb" }))
+app.use(bodyParser.json({ limit: "1gb" }))
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html")
+})
+
+app.post("/", (req, res) => {
+    console.log(req.body)
+    res.send({ res: "Ok" })
 })
 
 app.listen(3000, () => {

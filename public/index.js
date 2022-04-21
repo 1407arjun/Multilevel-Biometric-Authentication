@@ -4,6 +4,7 @@ const canvas = document.querySelector("canvas")
 let chunks = []
 let paused = true
 let timer
+let dataURL
 
 // This constraints object tells
 // the browser to include
@@ -49,6 +50,16 @@ function startRecording(thisButton, otherButton) {
             //Make the mediaRecorder global
             window.mediaRecorder = mediaRecorder
 
+            console.log(
+                "I'm listening... just start talking for a few seconds..."
+            )
+            console.log(
+                "Maybe read this: \n" +
+                    thingsToRead[
+                        Math.floor(Math.random() * thingsToRead.length)
+                    ]
+            )
+
             mediaRecorder.start()
 
             // Whenever (here when the recorder
@@ -77,7 +88,7 @@ function startRecording(thisButton, otherButton) {
             second parameter*/
                 if (!paused) {
                     const blob = new Blob(chunks, {
-                        type: "audio/mpeg"
+                        type: "audio/wav; codecs=audio/pcm"
                     })
                     chunks = []
 
@@ -95,34 +106,7 @@ function startRecording(thisButton, otherButton) {
                     // Now you can use the created URL as the
                     // source of the video or audio element
                     recordedMedia.src = recordedMediaURL
-
-                    // Create a download button that lets the
-                    // user download the recorded media
-                    const downloadButton = document.createElement("a")
-
-                    // Set the download attribute to true so that
-                    // when the user clicks the link the recorded
-                    // media is automatically gets downloaded.
-                    downloadButton.download = "Recorded-Media"
-
-                    downloadButton.href = recordedMediaURL
-                    downloadButton.innerText = "Download it!"
-                    downloadButton.id = "download"
-
-                    downloadButton.onclick = () => {
-                        /* After download revoke the created URL
-                using URL.revokeObjectURL() method to 
-                avoid possible memory leak. Though, 
-                the browser automatically revokes the 
-                created URL when the document is unloaded,
-                but still it is good to revoke the created 
-                URLs */
-                        URL.revokeObjectURL(recordedMedia)
-                    }
-
-                    document
-                        .getElementById(`vid-recorder`)
-                        .append(recordedMedia, downloadButton)
+                    createTextIndependentVerificationProfile(blob)
                 }
             }
 
@@ -133,8 +117,8 @@ function startRecording(thisButton, otherButton) {
             thisButton.disabled = true
             otherButton.disabled = false
 
-            let time = 20
-            let click = 20 - Math.floor(Math.random() * 20)
+            let time = 25
+            let click = 25 - Math.floor(Math.random() * 20)
             console.log(click)
             timer = setInterval(() => {
                 time--
@@ -142,7 +126,6 @@ function startRecording(thisButton, otherButton) {
                     "timer"
                 ).innerText = `${time} sec(s) remaining`
                 if (time == click) {
-                    console.log(canvas)
                     canvas.width = webCamContainer.videoWidth
                     canvas.height = webCamContainer.videoHeight
                     console.log("Hee")
@@ -156,7 +139,7 @@ function startRecording(thisButton, otherButton) {
                             canvas.height
                         )
 
-                    const dataURL = canvas.toDataURL()
+                    dataURL = canvas.toDataURL()
                     console.log(dataURL)
                     document.getElementById("screenshot").src = dataURL
                 }
@@ -182,7 +165,7 @@ function stopRecording(thisButton, otherButton) {
     })
 
     document.getElementById(`vid-record-status`).innerText = "Recording done!"
-    document.getElementById("timer").innerText = `20 sec(s) remaining`
+    document.getElementById("timer").innerText = `25 sec(s) remaining`
     thisButton.disabled = true
     otherButton.disabled = false
 
