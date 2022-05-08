@@ -3,7 +3,7 @@ const enrolTextIndependentVerificationProfileEndpoint = (profileId) =>
     `https://eastus2.api.cognitive.microsoft.com//speaker/verification/v2.0/text-independent/profiles/${profileId}/enrollments?ignoreMinLength=false`
 const verifyTextIndependentProfileEndpoint = (profileId) =>
     `https://eastus2.api.cognitive.microsoft.com//speaker/verification/v2.0/text-independent/profiles/${profileId}/verify`
-const speechKey = "d64e48a129aa4c2f94817c74ab76bd40"
+const speechKey = "<SPEECH_KEY>"
 let profileId
 let voiceMatch = false
 

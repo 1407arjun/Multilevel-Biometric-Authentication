@@ -1,6 +1,6 @@
 const createFaceDetectionEndpoint = `https://arjun1407.cognitiveservices.azure.com/face/v1.0/detect?overload=stream&returnFaceId=true`
 const createFaceVerificationEndpoint = `https://arjun1407.cognitiveservices.azure.com/face/v1.0/verify`
-const faceKey = "dab40dd018bf4e52823616275ae58e68"
+const faceKey = "<FACE_KEY>"
 let faceId
 let faceMatch = false
 
